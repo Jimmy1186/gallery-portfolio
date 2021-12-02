@@ -4,7 +4,7 @@ import Link from "next/link";
 import Scrollbar from "../../components/Scrollbar";
 import {motion} from "framer-motion"
 import Head from 'next/head'
-import { server } from "../../../config";
+import { server } from "../../config";
 
 const artId = ({ art, nextID, prevID }) => {
   const arts = art[0];

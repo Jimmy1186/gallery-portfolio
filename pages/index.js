@@ -3,7 +3,7 @@ import DisplayCard from "../components/DisplayCard";
 import Link from "next/link";
 import { motion } from "framer-motion";
 // import { useRouter } from "next/router";
-import { server } from "../../config";
+import { server } from "../config";
 
 export default function Home({ data }) {
   // const router = useRouter();
