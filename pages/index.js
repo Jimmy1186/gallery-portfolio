@@ -14,7 +14,7 @@ export default function Home({ data }) {
       <Head>
         <meta charSet="utf-8" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
+        <link rel="preconnect" href="https://fonts.gstatic.com"/>
         <link
           href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Noto+Serif+TC:wght@300;700&display=swap"
           rel="stylesheet"
@@ -57,7 +57,7 @@ export default function Home({ data }) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const response = await fetch(`${server}/api/gallery`);
   const data = await response.json();
 

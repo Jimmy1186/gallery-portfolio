@@ -52,25 +52,9 @@ const artId = ({ art, nextID, prevID }) => {
 
 export default artId;
 
-export const getStaticPaths = async () => {
-  const res = await fetch(`${server}/api/gallery`);
-  const data = await res.json();
 
-  const paths = data.map((art) => {
-    return {
-      params: {
-        artId: `${art._id}`,
-      },
-    };
-  });
 
-  return {
-    paths: paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps = async (context) => {
+export const getServerSideProps = async (context) => {
   const { params } = context;
 
   const res = await fetch(`${server}/api/gallery/${params.artId}`);
