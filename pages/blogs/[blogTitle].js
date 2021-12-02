@@ -2,7 +2,7 @@ import React from 'react'
 import Head from 'next/head';
 import Image from 'next/image';
 import {motion} from 'framer-motion'
-const dev = process.env.NODE_ENV !== 'production';
+import {server} from "../../config/index"
 
 function blogTitle({blog}) {
     const blogs = blog[0]
