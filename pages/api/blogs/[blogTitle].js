@@ -2,7 +2,7 @@ import dbConnect from "../../../utils/dbConnection";
 dbConnect()
 const blog = require("../../../models/blog");
 
-export default async (req,res)=>{
+const blogTitle = async (req,res)=>{
     const {blogTitle} = req.query;
     const blogs = await blog
     .find({title:`${blogTitle}`})
@@ -11,3 +11,4 @@ export default async (req,res)=>{
 
     res.json(blogs)
 }
+export default blogTitle

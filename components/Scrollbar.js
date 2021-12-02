@@ -30,7 +30,7 @@ function Scrollbar({ art, nextID, prevID }) {
           {pID != undefined ? (
             <Link href={`/gallery/${pID._id}`}>
               <a>
-                <Image src={left} />
+                <Image src={left} alt="left-arrow"/>
               </a>
             </Link>
           ) : (
@@ -40,7 +40,7 @@ function Scrollbar({ art, nextID, prevID }) {
           {nID != undefined ? (
             <Link href={`/gallery/${nID._id}`} replace={true}>
               <a>
-                <Image src={right} />
+                <Image src={right} alt="right-arrow"/>
               </a>
             </Link>
           ) : (
