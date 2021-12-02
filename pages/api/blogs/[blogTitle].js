@@ -11,4 +11,4 @@ const blogTitle = async (req,res)=>{
 
     res.json(blogs)
 }
-export default blogTitle
+export default blog
