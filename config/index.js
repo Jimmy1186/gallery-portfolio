@@ -1,3 +1,3 @@
 const dev = process.env.NODE_ENV !== 'production';
 
-export const server = dev ? 'http://localhost:3000' : 'gallery-tau-peach.vercel.app';
+export const server = dev ? 'http://localhost:3000' : 'https://gallery-portfolio-pplzojw0t-jimmy1186.vercel.app';
