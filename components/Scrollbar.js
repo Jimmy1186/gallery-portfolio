@@ -4,10 +4,13 @@ import Image from "next/image";
 import right from "../public/arrow-right.png";
 import left from "../public/arrow-left.png";
 import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 
 function Scrollbar({ art, nextID, prevID }) {
   const nID = nextID[0];
   const pID = prevID[0];
+  const router = useRouter()
+ 
 
   return (
     <>
@@ -19,16 +22,16 @@ function Scrollbar({ art, nextID, prevID }) {
             transition={{ duration: 0.3 }}
             exit={{ opacity: 0 }}
           >
-            {art.name}
+            {art.name!=undefined? (`${art.name}`):(art.title)}
           </motion.h2>
           <motion.h4 initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
-            exit={{ opacity: 0 }}>{art.artist.name}</motion.h4>
+            exit={{ opacity: 0 }}>{art.artist!=undefined?(`${art.artist.name}`):""}</motion.h4>
         </div>
         <div className="scrollControl">
           {pID != undefined ? (
-            <Link href={`/gallery/${pID._id}`}>
+            <Link href={`${pID._id}`}  replace={true}>
               <a>
                 <Image src={left} alt="left-arrow"/>
               </a>
@@ -38,7 +41,7 @@ function Scrollbar({ art, nextID, prevID }) {
           )}
 
           {nID != undefined ? (
-            <Link href={`/gallery/${nID._id}`} replace={true}>
+            <Link href={`${nID._id}`} replace={true}>
               <a>
                 <Image src={right} alt="right-arrow"/>
               </a>

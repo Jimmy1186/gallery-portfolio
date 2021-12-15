@@ -2,8 +2,11 @@ import Head from "next/head";
 import DisplayCard from "../components/DisplayCard";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import dbConnect from "../utils/dbConnection";
+
 // import { useRouter } from "next/router";
 import { server } from "../config";
+const art =require('../models/art')
 
 export default function Home({ data }) {
   // const router = useRouter();
@@ -57,17 +60,30 @@ export default function Home({ data }) {
   );
 }
 
-export async function getServerSideProps() {
-  const response = await fetch(`${server}/api/gallery`);
-  const data = await response.json();
+export async function getStaticProps() {
+  await dbConnect()
+  const gallery = await art.find()
 
-  if (!data) {
+
+
     return {
-      notFound: true,
-    };
-  }
+      props:{
+        data:JSON.parse(JSON.stringify(gallery))
+      }
+    }
 
-  return {
-    props: { data },
-  };
+
+
+  // const response = await fetch(`${server}/api/gallery`);
+  // const data = await response.json();
+
+  // if (!data) {
+  //   return {
+  //     notFound: true,
+  //   };
+  // }
+
+  // return {
+  //   props: { data },
+  // };
 }

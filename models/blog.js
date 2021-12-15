@@ -4,7 +4,8 @@ const blogSchema = new mongoose.Schema({
     title:String,
     date:Date,
     description:String,
-    img:Array
+    img:Object,
+    like:Number,
 })
 
 module.exports = mongoose.models.blog || mongoose.model('blog',blogSchema)

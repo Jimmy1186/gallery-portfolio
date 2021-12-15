@@ -5,10 +5,12 @@ import Scrollbar from "../../components/Scrollbar";
 import {motion} from "framer-motion"
 import Head from 'next/head'
 import { server } from "../../config";
+const art = require("../../models/art")
+import dbConnect from "../../utils/dbConnection";
 
 const artId = ({ art, nextID, prevID }) => {
   const arts = art[0];
-
+ 
   return (
     <>
     <Head>
@@ -54,17 +56,74 @@ export default artId;
 
 
 
-export const getServerSideProps = async (context) => {
+
+export const getStaticPaths = async()=>{
+  await dbConnect()
+  const res = await art.find()
+  const gallery = JSON.parse(JSON.stringify(res))
+
+  const paths = gallery.map((art)=>{
+    return{
+      params:{
+        artId:art._id
+      }
+    }
+  })
+ 
+  return {paths,fallback:false}
+}
+
+export const getStaticProps = async (context) => {
+  await dbConnect()
   const { params } = context;
 
-  const res = await fetch(`${server}/api/gallery/${params.artId}`);
 
-  const { gallery, nextID, prevID } = await res.json();
+
+  const gallery = await art
+  .find({ _id: `${params.artId}` })
+  .clone()
+  .catch(function (err) {
+    return {
+      notFound: true,
+    }
+  });
+
+  const nextID = await art
+  .find({_id: {$gt: params.artId}}).sort({_id: 1 }).limit(1)
+  .clone()
+  .catch(function (err) {
+    return {
+      notFound: true,
+    }
+  });
+
+  const prevID = await art
+  .find({_id: {$lt: params.artId}}).sort({_id: -1 }).limit(1)
+  .clone()
+  .catch(function (err) {
+    return {
+      notFound: true,
+    }
+  });
+
+
   return {
-    props: {
-      art: gallery,
-      nextID,
-      prevID,
-    },
-  };
+    props:{
+      art: JSON.parse(JSON.stringify(gallery)),
+          nextID:JSON.parse(JSON.stringify(nextID)),
+          prevID:JSON.parse(JSON.stringify(prevID)),
+    }
+  }
+
+
+  // const res = await fetch(`${server}/api/gallery/${params.artId}`);
+
+  // const { gallery, nextID, prevID } = await res.json();
+  // return {
+  //   props: {
+  //     art: gallery,
+  //     nextID,
+  //     prevID,
+  //   },
+  // };
 };
