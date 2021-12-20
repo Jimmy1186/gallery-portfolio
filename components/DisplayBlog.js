@@ -30,7 +30,7 @@ function Displayarticle(article) {
           </motion.div>
         </div>
         <Image
-          src={article.img[0]}
+          src={article.img}
        
           width={1024}
           height={768}

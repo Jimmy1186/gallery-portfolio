@@ -5,6 +5,9 @@ import Head from 'next/head'
 import { server } from "../../config";
 import DisplayBlog from "../../components/DisplayBlog";
 import dbConnect from "../../utils/dbConnection";
+const blog = require("../../models/blog")
+
+
 const blogID = ({ article, nextID, prevID }) => {
     console.log(article)
   const aritcles = article[0];
@@ -55,20 +58,59 @@ const blogID = ({ article, nextID, prevID }) => {
 
 export default blogID;
 
+export const getStaticPaths = async()=>{
+  await dbConnect()
+  const res = await blog.find()
+  const blogs = JSON.parse(JSON.stringify(res))
 
+  const paths = blogs.map((blog)=>{
+    return{
+      params:{
+        blogID:blog._id
+      }
+    }
+  })
+ 
+  return {paths,fallback:false}
+}
 
-export const getServerSideProps = async (context) => {
-  // await dbConnect()
+export const getStaticProps = async (context) => {
+  await dbConnect()
   const { params } = context;
 
-  const res = await fetch(`${server}/api/blog/${params.blogID}`);
+  const article = await blog
+    .find({ _id: `${params.blogID}` })
+    .clone()
+    .catch(function (err) {
+      return {
+        notFound: true,
+      }
+    });
 
-  const { article, nextID, prevID } = await res.json();
+    const nextID = await blog
+    .find({_id: {$gt: params.blogID}}).sort({_id: 1 }).limit(1)
+    .clone()
+    .catch(function (err) {
+      return {
+        notFound: true,
+      }
+    });
+
+    const prevID = await blog
+    .find({_id: {$lt: params.blogID}}).sort({_id: -1 }).limit(1)
+    .clone()
+    .catch(function (err) {
+      return {
+        notFound: true,
+      }
+    });
+
+
   return {
     props: {
-      article,
-      nextID,
-      prevID,
+      article: JSON.parse(JSON.stringify(article)),
+      nextID:JSON.parse(JSON.stringify(nextID)),
+      prevID:JSON.parse(JSON.stringify(prevID)),
     },
   };
 };

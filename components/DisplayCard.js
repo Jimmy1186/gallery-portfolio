@@ -9,25 +9,25 @@ function DisplayCard(art) {
   return (
     <div className="cards">
       <div
-        className="info"
+        className="info info-ga"
         style={
-          router.pathname != "/" ? { background: "none", height: "100%" } : {}
+          router.pathname != "/gallery" ? { background: "none", height: "100%" } : {}
         }
       >
         <motion.div
         exit={{opacity:0,height:0}}
-          className={router.pathname != "/" ? "info-block-rwd" : "info-block"}
-          style={router.pathname != "/" ? { background: "#f2f2f2" } : {}}
+          className={router.pathname != "/gallery" ? "info-block-rwd" : "info-block"}
+          style={router.pathname != "/gallery" ? { background: "#f2f2f2" } : {}}
         >
           <h4
-            style={router.pathname != "/" ? { color: "#141f26" } : {}}
-            className={router.pathname != "/" ? "h4-rwd" : ""}
+            style={router.pathname != "/gallery" ? { color: "#141f26" } : {}}
+            className={router.pathname != "/gallery" ? "h4-rwd" : ""}
           >
             {art.name}
           </h4>
           <h5
-            style={router.pathname != "/" ? { color: "#516673" } : {}}
-            className={router.pathname != "/" ? "h5-rwd" : ""}
+            style={router.pathname != "/gallery" ? { color: "#516673" } : {}}
+            className={router.pathname != "/gallery" ? "h5-rwd" : ""}
           >
             {art.artist.name}
           </h5>
@@ -39,7 +39,7 @@ function DisplayCard(art) {
         height={art.images.galleryheight}
         alt={art.name}
       />
-      {router.pathname != "/" ? (
+      {router.pathname != "/gallery" ? (
         <style jsx>{`
           @media screen and (min-width: 1024px) {
             .info-block {
