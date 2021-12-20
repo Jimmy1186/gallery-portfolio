@@ -10,7 +10,7 @@ function Navbar() {
   return (
     <>
       <nav>
-        <Link href="/">
+        <Link href="/portfolio">
           <a className="logo">
            <Image src={Icon} width={100} height={100} alt="logo"/>
           </a>
